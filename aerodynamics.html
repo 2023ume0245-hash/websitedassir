@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liquid Rocket Propulsion </title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --space: #04080f;
+      --deep: #0b1a2e;
+      --navy: #0f2545;
+      --blue: #1d4ed8;
+      --cyan: #06b6d4;
+      --fire: #f97316;
+      --fire2: #ef4444;
+      --steel: #94a3b8;
+      --surface: #f1f5f9;
+      --border: #e2e8f0;
+    }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: 'Barlow', sans-serif; background: #fff; color: #0f172a; }
+    .font-display { font-family: 'Barlow Condensed', sans-serif; }
+
+    /* HERO */
+    .hero-bg {
+      background: radial-gradient(ellipse at 60% 0%, #1d3a6e 0%, #0b1a2e 50%, #04080f 100%);
+      position: relative; overflow: hidden;
+    }
+    .stars {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 25%, rgba(255,255,255,0.9) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 50%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 80%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 85%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.5) 0%, transparent 100%);
+    }
+    .flame-glow {
+      position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 200px;
+      background: radial-gradient(ellipse, rgba(249,115,22,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-line {
+      width: 3px; height: 50px;
+      background: linear-gradient(to bottom, var(--cyan), var(--fire));
+      margin: 0 auto 20px;
+      border-radius: 2px;
+    }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.7s ease forwards; }
+    .d1{animation-delay:.1s} .d2{animation-delay:.2s} .d3{animation-delay:.3s} .d4{animation-delay:.4s}
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+
+    /* SECTION LABELS */
+    .section-label {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+      color: var(--cyan);
+    }
+    .section-title {
+      font-family:'Barlow Condensed',sans-serif;
+      font-size: clamp(26px,4vw,40px); font-weight:800;
+      color: var(--navy); line-height:1.1;
+    }
+    .divider {
+      height:3px; width:50px;
+      background: linear-gradient(90deg, var(--cyan), var(--fire));
+      border-radius:2px; margin:8px 0 22px;
+    }
+    .divider-center { margin: 8px auto 22px; }
+
+    /* CARDS */
+    .focus-card {
+      background:#fff; border:1px solid var(--border);
+      border-radius:14px; padding:24px 20px;
+      transition:all .25s ease; position:relative; overflow:hidden;
+    }
+    .focus-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg, var(--cyan), var(--blue));
+      transform:scaleX(0); transition:transform .3s ease; transform-origin:left;
+    }
+    .focus-card:hover { transform:translateY(-4px); box-shadow:0 14px 36px rgba(15,37,69,0.12); }
+    .focus-card:hover::before { transform:scaleX(1); }
+
+    .pub-card {
+      background:#fff; border:1px solid var(--border);
+      border-left:4px solid var(--cyan); border-radius:8px;
+      padding:18px 20px; transition:box-shadow .2s, transform .2s;
+    }
+    .pub-card:hover { box-shadow:0 6px 20px rgba(15,37,69,0.09); transform:translateX(4px); }
+
+    /* STAT */
+    .stat-badge {
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:12px; padding:18px 24px; text-align:center;
+    }
+
+    /* ICON BOX */
+    .icon-box { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; }
+
+    /* TAG */
+    .tag {
+      display:inline-block; background:#ecfeff; color:#0e7490;
+      border:1px solid #a5f3fc; border-radius:20px;
+      font-size:11px; font-weight:600; padding:3px 10px;
+    }
+
+    /* PIPELINE */
+    .pipeline-step {
+      background:#fff; border:1.5px solid var(--border); border-radius:10px;
+      padding:14px 12px; text-align:center; font-size:13px; font-weight:600;
+      color:var(--navy); flex:1; min-width:100px;
+    }
+    .pipeline-arrow { color:var(--fire); font-size:22px; font-weight:700; flex-shrink:0; }
+
+    /* GALLERY */
+    .gallery-item {
+      border-radius:12px; overflow:hidden; aspect-ratio:4/3;
+      position:relative; cursor:pointer;
+    }
+    .gallery-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(4,8,15,0.8) 0%, transparent 60%);
+      display:flex; align-items:flex-end; padding:12px;
+      opacity:0; transition:opacity .25s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity:1; }
+
+    /* CTA */
+    .cta-section { background: radial-gradient(ellipse at center top, #0f2545 0%, #04080f 100%); }
+    .btn-primary {
+      background:linear-gradient(135deg,var(--cyan),var(--blue));
+      color:#fff; font-family:'Barlow Condensed',sans-serif;
+      font-size:15px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+      padding:14px 36px; border-radius:8px; display:inline-block; text-decoration:none;
+      transition:opacity .2s, transform .2s;
+    }
+    .btn-primary:hover { opacity:.9; transform:translateY(-2px); }
+    .btn-outline {
+      border:2px solid rgba(255,255,255,0.25); color:#fff;
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:15px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+      padding:12px 34px; border-radius:8px; display:inline-block; text-decoration:none;
+      transition:border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color:white; background:rgba(255,255,255,0.08); }
+
+    /* CFD color bar */
+    .cfd-bar {
+      height:12px; border-radius:4px;
+      background: linear-gradient(90deg, #0000ff, #00aaff, #00ffff, #00ff00, #ffff00, #ff7700, #ff0000);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero-bg text-white py-24 md:py-32 px-6">
+  <div class="stars"></div>
+  <div class="flame-glow"></div>
+  <div class="max-w-5xl mx-auto relative z-10">
+    <div class="fade-up">
+      <div class="hero-line"></div>
+      <p class="section-label text-center" style="color:var(--cyan)">Liquid Rocket Propulsion Lab</p>
+    </div>
+    <h1 class="font-display text-center text-5xl md:text-7xl font-extrabold leading-tight mt-4 mb-6 fade-up d1">
+      <span style="color:var(--cyan)">Liquid</span> Rocket<br>Propulsion
+    </h1>
+    <p class="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto text-center leading-relaxed mb-12 fade-up d2">
+      Advancing the science of liquid bipropellant rocket engines — from novel injector design and spray atomization to reusable rocket systems and high-fidelity CFD simulation.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center fade-up d3">
+      <div class="stat-badge">
+        <p class="font-display text-3xl font-bold" style="color:var(--cyan)">Pintle</p>
+        <p class="text-xs text-slate-400 mt-1">Novel Injector Design</p>
+      </div>
+      <div class="stat-badge">
+        <p class="font-display text-3xl font-bold" style="color:var(--fire)">LOX / Kerosene</p>
+        <p class="text-xs text-slate-400 mt-1">Bipropellant Systems</p>
+      </div>
+      <div class="stat-badge">
+        <p class="font-display text-3xl font-bold" style="color:#a78bfa">Reusable</p>
+        <p class="text-xs text-slate-400 mt-1">Rocket Propulsion</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ── -->
+<section class="py-16 md:py-20 px-6 bg-white">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="section-label mb-1">Research Overview</p>
+      <div class="divider"></div>
+      <h2 class="section-title mb-5">Bipropellant Rocket Engine Research</h2>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Our group focuses on the fundamental and applied research of <strong>liquid bipropellant rocket engines</strong>. We design and study novel injectors — particularly <strong>pintle injectors</strong> — that offer superior mixing, throttling capability, and combustion stability for next-generation launch vehicles.
+      </p>
+      <p class="text-gray-600 leading-relaxed mb-5">
+        Combining experimental spray diagnostics with high-resolution CFD simulations, we characterize the complete combustion process from atomization to flame structure — targeting reusable, high-performance propulsion systems.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="tag">Pintle Injector</span>
+        <span class="tag">Bipropellant</span>
+        <span class="tag">Spray Atomization</span>
+        <span class="tag">CFD Simulation</span>
+        <span class="tag">Reusable Rockets</span>
+        <span class="tag">LOX / Kerosene</span>
+      </div>
+    </div>
+    <!-- Rocket engine illustration -->
+    <div style="background:linear-gradient(160deg,#04080f,#0b1a2e,#0f2545);
+            border-radius:18px;
+            aspect-ratio:4/3;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            overflow:hidden;
+            position:relative;">
+
+  <!-- Real Image -->
+  <img src="images/rocket-nozzle.jpg"
+       alt="Rocket Nozzle Exhaust"
+       style="position:absolute;
+              inset:0;
+              width:100%;
+              height:100%;
+              object-fit:cover;
+              opacity:0.9;">
+
+  <!-- Dark overlay for contrast -->
+  <div style="position:absolute;
+              inset:0;
+              background:linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2));
+              z-index:1;">
+  </div>
+
+  <!-- Optional Text -->
+  <div style="position:relative; z-index:2; text-align:center;">
+    <p style="color:#94a3b8; font-size:12px; letter-spacing:1px;">
+      Rocket Nozzle & Exhaust Flow
+    </p>
+  </div>
+
+</div>
+  </div>
+</section>
+
+<!-- ── FOCUS AREAS ── -->
+<section class="py-16 md:py-20 px-6" style="background:var(--surface)">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-2">Focus Areas</p>
+      <div class="divider divider-center"></div>
+      <h2 class="section-title">Key Research Directions</h2>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#ecfeff">
+          <i data-lucide="settings-2" class="w-5 h-5" style="color:var(--cyan)"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">Pintle Injectors</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Novel pintle injector development for throttleable, high-performance bipropellant engines.</p>
+      </div>
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#fff7ed">
+          <i data-lucide="rocket" class="w-5 h-5" style="color:var(--fire)"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">Reusable Rockets</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Propulsion systems research for reusable launch vehicles requiring deep throttling capability.</p>
+      </div>
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#faf5ff">
+          <i data-lucide="droplets" class="w-5 h-5" style="color:#7c3aed"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">Spray Atomization</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Laser diagnostics and shadowgraphy to characterize spray breakup, droplet sizing, and mixing.</p>
+      </div>
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#eff6ff">
+          <i data-lucide="activity" class="w-5 h-5" style="color:var(--blue)"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">CFD Simulation</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">High-fidelity numerical simulations of internal flow, recirculation zones, and combustion instability.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PINTLE INJECTOR ── -->
+<section class="py-16 md:py-20 px-6 bg-white">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <!-- Pintle injector diagram placeholder -->
+    <div style="background:linear-gradient(135deg,#e8f0fe,#dbeafe);
+            border-radius:16px;
+            padding:16px;
+            border:1px solid #bfdbfe;
+            position:relative;
+            overflow:hidden;">
+
+  <!-- Title -->
+  <p class="font-display font-bold text-sm mb-3"
+     style="color:var(--blue); letter-spacing:2px; text-transform:uppercase;">
+     Novel Pintle Injector Cross-Section
+  </p>
+
+  <!-- Real Image -->
+  <div style="border-radius:10px; overflow:hidden;">
+    <img src="images/pintle-injector.jpg"
+         alt="Pintle Injector Cross Section"
+         style="width:100%;
+                height:100%;
+                object-fit:cover;">
+  </div>
+
+</div>
+    <div>
+      <p class="section-label mb-1">Injector Technology</p>
+      <div class="divider"></div>
+      <h2 class="section-title mb-5">Novel Pintle Injector Development</h2>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        The pintle injector is a critical innovation for liquid rocket engines — used in engines like SpaceX's Merlin. Our group develops <strong>next-generation pintle designs</strong> with tangential fuel and oxidizer ports, optimized recess geometry, and enhanced impingement characteristics for superior atomization and mixing.
+      </p>
+      <div class="space-y-3 mt-4">
+        <div class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--cyan)"></span>
+          <span class="text-gray-600 text-sm"><strong>Fuel inlet + Oxidizer inlet</strong> with separate tangential ports for controlled impingement angle</span>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--fire)"></span>
+          <span class="text-gray-600 text-sm"><strong>Inner & Outer sleeves</strong> with recess geometry for enhanced propellant interaction zone</span>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:#7c3aed"></span>
+          <span class="text-gray-600 text-sm"><strong>Throttleable design</strong> enabling deep thrust modulation — ideal for reusable rocket landing burns</span>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--blue)"></span>
+          <span class="text-gray-600 text-sm"><strong>Cold flow + hot fire testing</strong> with PIV and shadowgraph spray characterization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIMENTAL + CFD ── -->
+<section class="py-16 md:py-20 px-6" style="background:var(--surface)">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-2">Methods</p>
+      <div class="divider divider-center"></div>
+      <h2 class="section-title">Experiments & Simulations</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Spray diagnostics -->
+      <div class="bg-white rounded-2xl p-6 border border-border">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="icon-box" style="background:#f5f3ff"><i data-lucide="camera" class="w-5 h-5" style="color:#7c3aed"></i></div>
+          <h3 class="font-display font-bold text-xl" style="color:var(--navy)">Spray Diagnostics</h3>
+        </div>
+        <!-- Spray visual placeholder -->
+        <div style="background:#000;
+            border-radius:10px;
+            aspect-ratio:4/3;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:16px;
+            overflow:hidden;
+            position:relative;">
+
+  <!-- Real Spray Image -->
+  <img src="images/spray-injector.jpg"
+       alt="Fuel Injector Spray"
+       style="width:100%;
+              height:100%;
+              object-fit:cover;
+              opacity:0.95;">
+
+  <!-- Optional overlay for readability -->
+  <div style="position:absolute;
+              inset:0;
+              background:linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5));">
+  </div>
+
+</div>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          High-speed Shadowgraphy and backlit imaging are used to capture the complete spray cone from the pintle injector exit — enabling droplet size distribution, spray angle, and breakup length measurements.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="tag">Shadowgraphy</span>
+          <span class="tag">PIV</span>
+          <span class="tag">Droplet Sizing</span>
+        </div>
+      </div>
+
+      <!-- CFD -->
+      <div class="bg-white rounded-2xl p-6 border border-border">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="icon-box" style="background:#eff6ff"><i data-lucide="layers" class="w-5 h-5" style="color:var(--blue)"></i></div>
+          <h3 class="font-display font-bold text-xl" style="color:var(--navy)">CFD Flow Simulation</h3>
+        </div>
+        <!-- CFD color map placeholder -->
+        <div style="background:#fff;
+            border:1px solid #e2e8f0;
+            border-radius:10px;
+            aspect-ratio:4/3;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:16px;
+            overflow:hidden;
+            padding:0;">
+
+  <!-- Real Image -->
+  <img src="images/cfd-combustion.jpg"
+       alt="CFD Combustion Simulation"
+       style="width:100%;
+              height:100%;
+              object-fit:cover;">
+
+</div>
+        <p class="text-gray-600 text-sm leading-relaxed">
+          High-fidelity CFD models resolve internal recirculation zones, impingement dynamics, and thermal gradients inside the combustion chamber — validated against experimental spray and pressure measurements.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <span class="tag">ANSYS Fluent</span>
+          <span class="tag">OpenFOAM</span>
+          <span class="tag">Reacting Flow</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REUSABLE ROCKETS ── -->
+<section class="py-16 md:py-20 px-6 bg-white">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="section-label mb-1">Application</p>
+      <div class="divider"></div>
+      <h2 class="section-title mb-5">Reusable Rocket Propulsion</h2>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Reusable launch vehicles demand engines capable of <strong>deep throttling</strong> — from full thrust at liftoff to low thrust during landing burns. The pintle injector's inherent throttling capability makes it ideal for this mission profile.
+      </p>
+      <p class="text-gray-600 leading-relaxed mb-5">
+        Our research directly addresses the combustion stability, heat transfer, and atomization challenges that arise at off-design throttle conditions — critical for reliable, repeatable reusability.
+      </p>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-gray-50 rounded-xl p-4 border border-border text-center">
+          <p class="font-display text-2xl font-bold" style="color:var(--fire)">10:1</p>
+          <p class="text-gray-500 text-xs mt-1">Throttle ratio target</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-border text-center">
+          <p class="font-display text-2xl font-bold" style="color:var(--cyan)">LOX/Kero</p>
+          <p class="text-gray-500 text-xs mt-1">Propellant combination</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-border text-center">
+          <p class="font-display text-2xl font-bold" style="color:#7c3aed">Multi-restart</p>
+          <p class="text-gray-500 text-xs mt-1">Engine restart capability</p>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-4 border border-border text-center">
+          <p class="font-display text-2xl font-bold" style="color:var(--blue)">High Isp</p>
+          <p class="text-gray-500 text-xs mt-1">Optimized for performance</p>
+        </div>
+      </div>
+    </div>
+    <!-- Rocket visual -->
+    <div style="background:linear-gradient(180deg,#04080f 0%,#0b1a2e 60%,#1a2f0a 100%);
+            border-radius:18px;
+            aspect-ratio:4/3;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            overflow:hidden;">
+
+  <!-- Background Image -->
+  <img src="images/rocket-launch.jpg"
+       alt="Rocket Launch"
+       style="position:absolute;
+              inset:0;
+              width:100%;
+              height:100%;
+              object-fit:cover;
+              opacity:0.95;">
+
+  <!-- Dark Overlay for readability -->
+  <div style="position:absolute;
+              inset:0;
+              background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.3));
+              z-index:1;"></div>
+
+  <!-- Optional Text / Logo -->
+  <div style="position:relative; z-index:2; text-align:center;">
+    <h2 style="color:white; font-size:18px; font-weight:600; letter-spacing:1px;">
+      Rocket Propulsion 
+    </h2>
+  </div>
+
+  <!-- Bottom Glow Effect -->
+  <div style="position:absolute;
+              bottom:0;
+              left:50%;
+              transform:translateX(-50%);
+              width:140px;
+              height:40px;
+              background:radial-gradient(ellipse, rgba(249,115,22,0.6) 0%, transparent 70%);
+              border-radius:50%;
+              z-index:1;">
+  </div>
+
+</div>
+  </div>
+</section>
+
+<!-- ── PUBLICATIONS ── -->
+<section class="py-16 md:py-20 px-6" style="background:var(--surface)">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-2">Publications</p>
+      <div class="divider divider-center"></div>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
+    <div class="space-y-4">
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">Design and Cold-Flow Characterization of a Novel Pintle Injector for Bipropellant Liquid Rocket Engines</h3>
+        <p class="text-gray-400 text-xs">Aerospace Science and Technology, 2024</p>
+      </div>
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">Spray Atomization and Mixing in Pintle Injectors: PIV and Shadowgraphy Study</h3>
+        <p class="text-gray-400 text-xs">AIAA SciTech Forum, 2024</p>
+      </div>
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">CFD Analysis of Recirculation Zones and Combustion Instability in Throttled Rocket Engines</h3>
+        <p class="text-gray-400 text-xs">Journal of Propulsion and Power, 2023</p>
+      </div>
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">Effect of Recess Length and Tangential Port Geometry on Pintle Injector Performance</h3>
+        <p class="text-gray-400 text-xs">Combustion and Flame, 2023</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+
+
+<!-- ── FOOTER ── -->
+<footer style="border-top:1px solid var(--border); background:var(--space);" class="py-8 px-6">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-slate-500">
+    <span class="font-display font-bold text-white">Liquid Rocket Propulsion </span>
+    
+    <span>© 2025 Research Lab</span>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

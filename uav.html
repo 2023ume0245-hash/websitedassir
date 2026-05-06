@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gas Turbine Combustion Lab</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #112240;
+      --red: #c0392b;
+      --red-light: #e74c3c;
+      --orange: #e67e22;
+      --green: #27ae60;
+      --steel: #7f8c8d;
+      --light: #ecf0f1;
+      --surface: #f4f6f8;
+      --border: #dde3ea;
+    }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: 'Barlow', sans-serif; background: #fff; color: #1a1a2e; }
+    .font-display { font-family: 'Barlow Condensed', sans-serif; }
+
+    /* Hero */
+    .hero-bg {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 55%, #1a2f50 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(192,57,43,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 10% 90%, rgba(230,126,34,0.1) 0%, transparent 45%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-accent-bar {
+      width: 60px; height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+      margin-bottom: 20px;
+    }
+
+    /* Animations */
+    .fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.7s ease forwards; }
+    .d1 { animation-delay: 0.1s; } .d2 { animation-delay: 0.2s; } .d3 { animation-delay: 0.3s; } .d4 { animation-delay: 0.4s; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* Cards */
+    .focus-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 20px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .focus-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .focus-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(10,22,40,0.12); }
+    .focus-card:hover::after { transform: scaleX(1); }
+
+    .pub-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--red);
+      border-radius: 8px;
+      padding: 18px 20px;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .pub-card:hover { box-shadow: 0 6px 20px rgba(10,22,40,0.09); transform: translateX(4px); }
+
+    /* Section labels */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red);
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800; color: var(--navy);
+      line-height: 1.15;
+    }
+
+    /* Pipeline flow */
+    .pipeline-step {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      flex: 1;
+    }
+    .pipeline-arrow { color: var(--orange); font-size: 22px; font-weight: 700; flex-shrink: 0; }
+
+    /* Gallery grid */
+    .gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,22,40,0.75) 0%, transparent 60%);
+      display: flex; align-items: flex-end; padding: 12px;
+      opacity: 0; transition: opacity 0.25s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* Stat badges */
+    .stat-badge {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 14px 36px; border-radius: 8px;
+      display: inline-block; text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 12px 34px; border-radius: 8px;
+      display: inline-block; text-decoration: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+
+    /* Icon box */
+    .icon-box { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+
+    /* Tag */
+    .tag {
+      display: inline-block;
+      background: #fef3f2; color: var(--red);
+      border: 1px solid #fecaca;
+      border-radius: 20px;
+      font-size: 11px; font-weight: 600; padding: 3px 10px;
+    }
+
+    /* Divider line */
+    .divider { height: 1px; background: linear-gradient(90deg, var(--red), var(--orange), transparent); margin: 4px 0 24px; }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero-bg text-white py-24 md:py-32 px-6">
+  <div class="hero-grid"></div>
+  <div class="max-w-5xl mx-auto relative z-10">
+    <div class="fade-up">
+      <p class="section-label" style="color:#f97316">Gas Turbine Combustion Lab</p>
+      <div class="hero-accent-bar mt-3"></div>
+    </div>
+    <h1 class="font-display text-5xl md:text-7xl font-extrabold leading-tight mb-6 fade-up d1" style="letter-spacing:-0.5px">
+      Next-Generation<br><span style="color:#f97316">Combustor</span> Technology
+    </h1>
+    <p class="text-blue-200 text-lg md:text-xl max-w-2xl leading-relaxed mb-10 fade-up d2">
+      Our group is developing next-generation combustors for aero-engines focusing on <strong style="color:white">lean burn combustor technology</strong> — bridging fundamental fluid mechanics with real-world propulsion and clean energy applications.
+    </p>
+    <div class="flex flex-wrap gap-4 fade-up d3">
+      <div class="stat-badge">
+        <p class="font-display text-3xl font-bold text-orange-400">4</p>
+        <p class="text-xs text-blue-300 mt-1">Focus Areas</p>
+      </div>
+      <div class="stat-badge">
+        <p class="font-display text-3xl font-bold text-orange-400">30–100 KW</p>
+        <p class="text-xs text-blue-300 mt-1">Power Generation Range</p>
+      </div>
+      <div class="stat-badge">
+        <p class="font-display text-3xl font-bold text-orange-400">HTL</p>
+        <p class="text-xs text-blue-300 mt-1">Patented Technology</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OVERVIEW ── -->
+<section class="py-16 md:py-20 px-6 bg-white">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="section-label mb-2">Research Overview</p>
+      <div class="divider"></div>
+      <h2 class="section-title mb-5">Lean Burn Combustion for Aero-Engines</h2>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        Our research group advances the science of combustion inside gas turbine engines used in aircraft and power generation. By focusing on <strong>lean burn technology</strong>, we reduce NOₓ emissions while maintaining stability across a wide range of fuels.
+      </p>
+      <p class="text-gray-600 leading-relaxed mb-5">
+        We combine state-of-the-art <strong>laser diagnostics</strong>, computational simulations, and novel fuel formulations to push the boundaries of what modern combustors can achieve.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="tag">Lean Burn</span>
+        <span class="tag">Aero-engines</span>
+        <span class="tag">Laser Diagnostics</span>
+        <span class="tag">Biofuels</span>
+        <span class="tag">High-Speed Flows</span>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,#0a1628,#1a2f50); border-radius:16px; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;">
+      <!-- Turbine SVG illustration -->
+      <img src="images/uav.jpg" 
+       style="
+         width:100%;
+         height:100%;
+         object-fit:cover;
+         position:absolute;
+         top:0;
+         left:0;
+       ">
+        <!-- Engine casing -->
+        <ellipse cx="130" cy="100" rx="110" ry="60" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <ellipse cx="130" cy="100" rx="80" ry="45" fill="none" stroke="#e67e22" stroke-width="1" stroke-dasharray="4 4"/>
+        <!-- Compressor blades -->
+        <g transform="translate(130,100)">
+          <line x1="0" y1="0" x2="0" y2="-38" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="33" y2="19" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="-33" y2="19" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="0" y2="38" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="-33" y2="-19" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="0" y1="0" x2="33" y2="-19" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+        </g>
+        <circle cx="130" cy="100" r="10" fill="#c0392b" opacity="0.8"/>
+        <!-- Flow arrows -->
+        <path d="M 30 85 L 45 100 L 30 115" fill="none" stroke="#e67e22" stroke-width="1.5"/>
+        <path d="M 215 85 L 230 100 L 215 115" fill="none" stroke="#e67e22" stroke-width="1.5"/>
+        <text x="15" y="104" fill="#93c5fd" font-size="9" font-family="Barlow Condensed">AIR IN</text>
+        <text x="198" y="104" fill="#f97316" font-size="9" font-family="Barlow Condensed">THRUST</text>
+        <!-- Flame symbol -->
+        <path d="M 125 80 Q 130 65 135 80 Q 140 72 135 85 Q 130 95 125 85 Z" fill="#e67e22" opacity="0.9"/>
+        <text x="90" y="155" fill="#60a5fa" font-size="10" font-family="Barlow Condensed" font-weight="700">LEAN BURN COMBUSTOR</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOCUS AREAS ── -->
+<section class="py-16 md:py-20 px-6" style="background:var(--surface)">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-2">Focus Areas</p>
+      <div class="divider mx-auto" style="width:60px"></div>
+      <h2 class="section-title">Key Research Directions</h2>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#fef2f2">
+          <i data-lucide="plane" class="w-5 h-5" style="color:var(--red)"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">Combat Drones</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">High-performance combustors for UAV propulsion systems operating in extreme conditions.</p>
+      </div>
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#fff7ed">
+          <i data-lucide="wind" class="w-5 h-5" style="color:var(--orange)"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">High Speed Flows</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Supersonic and transonic internal flow research in gas turbine compression & turbine stages.</p>
+      </div>
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#f0fdf4">
+          <i data-lucide="leaf" class="w-5 h-5" style="color:var(--green)"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">Clean Energy</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Biomass-to-fuel pathways via HTL for fuel-flexible, low-emission power generation.</p>
+      </div>
+
+      <div class="focus-card">
+        <div class="icon-box mb-4" style="background:#eff6ff">
+          <i data-lucide="zap" class="w-5 h-5" style="color:#2563eb"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold mb-2" style="color:var(--navy)">Hypersonic Vehicles</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Propulsion research for next-generation hypersonic aircraft and scramjet combustion.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── LASER DIAGNOSTICS ── -->
+<section class="py-16 md:py-20 px-6 bg-white">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <p class="section-label mb-2">Experimental Methods</p>
+      <div class="divider"></div>
+      <h2 class="section-title mb-5">Detailed Laser Diagnostic Experiments</h2>
+      <p class="text-gray-600 leading-relaxed mb-4">
+        We employ cutting-edge non-intrusive optical measurement techniques to characterize combustion and flow fields at micro-second timescales. Our lab houses high-power Nd:YAG laser systems, PCO high-speed cameras, and custom optical rigs.
+      </p>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--red)"></span>
+          <span class="text-gray-600 text-sm"><strong>PIV (Particle Image Velocimetry)</strong> — full-field velocity mapping of spray and flame interactions</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--orange)"></span>
+          <span class="text-gray-600 text-sm"><strong>PLIF (Planar Laser Induced Fluorescence)</strong> — species concentration and temperature measurement</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--green)"></span>
+          <span class="text-gray-600 text-sm"><strong>Shadowgraph / Schlieren</strong> — high-speed visualization of shock waves and density gradients</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:#2563eb"></span>
+          <span class="text-gray-600 text-sm"><strong>Spray characterization</strong> — droplet sizing and atomization quality analysis</span>
+        </li>
+      </ul>
+    </div>
+    <!-- Gallery of 4 laser diagnostic placeholders -->
+   <div class="grid grid-cols-2 gap-3">
+
+  <!-- Laser Setup -->
+  <div class="gallery-item rounded-xl overflow-hidden relative">
+    <img src="images/laser-setup.jpg" 
+         alt="Laser Setup"
+         class="w-full h-full object-cover min-h-[130px]">
+    <div class="gallery-overlay rounded-xl absolute inset-0 flex items-end justify-center pb-2 bg-black/40">
+      <span class="text-white text-xs font-semibold">Laser Setup</span>
+    </div>
+  </div>
+
+  <!-- PCO Camera Rig -->
+  <div class="gallery-item rounded-xl overflow-hidden relative">
+    <img src="images/pco-camera.jpg" 
+         alt="PCO Camera Rig"
+         class="w-full h-full object-cover min-h-[130px]">
+    <div class="gallery-overlay rounded-xl absolute inset-0 flex items-end justify-center pb-2 bg-black/40">
+      <span class="text-white text-xs font-semibold">PCO Camera Rig</span>
+    </div>
+  </div>
+
+  <!-- Spray Shadowgraph -->
+  <div class="gallery-item rounded-xl overflow-hidden relative">
+    <img src="images/shadowgraph.jpg" 
+         alt="Spray Shadowgraph"
+         class="w-full h-full object-cover min-h-[130px]">
+    <div class="gallery-overlay rounded-xl absolute inset-0 flex items-end justify-center pb-2 bg-black/40">
+      <span class="text-white text-xs font-semibold">Spray Shadowgraph</span>
+    </div>
+  </div>
+
+  <!-- Flame Luminescence -->
+  <div class="gallery-item rounded-xl overflow-hidden relative">
+    <img src="images/flame.jpg" 
+         alt="Flame Luminescence"
+         class="w-full h-full object-cover min-h-[130px]">
+    <div class="gallery-overlay rounded-xl absolute inset-0 flex items-end justify-center pb-2 bg-black/40">
+      <span class="text-white text-xs font-semibold">Flame Luminescence</span>
+    </div>
+  </div>
+
+</div>
+  </div>
+</section>
+
+<!-- ── CLEAN ENERGY PIPELINE ── -->
+<section class="py-16 md:py-20 px-6" style="background:var(--surface)">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-2">Clean Energy Solutions</p>
+      <div class="divider mx-auto" style="width:60px"></div>
+      <h2 class="section-title">Biomass → Power: The HTL Pathway</h2>
+      <p class="text-gray-500 mt-3 max-w-xl mx-auto text-sm leading-relaxed">
+        Hydrothermal Liquefaction + Micro Gas Turbine Combustor = Localized power production. Converting stubble and algae to fuel using the HTL reactor, then using a fuel-flex gas turbine combustor to produce electricity.
+      </p>
+    </div>
+
+    <!-- Pipeline flow -->
+    <div class="flex items-center gap-2 md:gap-4 mb-8 flex-wrap justify-center">
+      <div class="pipeline-step" style="border-color:var(--green);max-width:130px">
+        <div class="text-2xl mb-1">🌾</div>
+        <p style="color:var(--green)">Bio-Mass</p>
+        <p class="text-gray-400 text-xs font-normal mt-1">Stubble & Algae</p>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step" style="border-color:var(--orange);max-width:130px">
+        <div class="text-2xl mb-1">⚗️</div>
+        <p style="color:var(--orange)">HTL Rig</p>
+        <p class="text-gray-400 text-xs font-normal mt-1">Hydrothermal Liquefaction</p>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step" style="border-color:#2563eb;max-width:130px">
+        <div class="text-2xl mb-1">✈️</div>
+        <p style="color:#2563eb">Blended Fuel</p>
+        <p class="text-gray-400 text-xs font-normal mt-1">Patented method & tested combinations</p>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step" style="border-color:var(--red);max-width:130px">
+        <div class="text-2xl mb-1">⚡</div>
+        <p style="color:var(--red)">Power Gen</p>
+        <p class="text-gray-400 text-xs font-normal mt-1">30–100 KW LAN Engines</p>
+      </div>
+    </div>
+
+    <!-- Feature cards -->
+    <div class="grid md:grid-cols-3 gap-5 mt-6">
+      <div class="bg-white rounded-xl p-5 border border-border">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-box" style="background:#f0fdf4"><i data-lucide="flame" class="w-5 h-5" style="color:var(--green)"></i></div>
+          <h3 class="font-display font-bold text-base" style="color:var(--navy)">Fuel-Flexible Engines</h3>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">Gas turbine combustors designed to operate on a spectrum of bio-derived and conventional fuels without hardware changes.</p>
+      </div>
+      <div class="bg-white rounded-xl p-5 border border-border">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-box" style="background:#fff7ed"><i data-lucide="cpu" class="w-5 h-5" style="color:var(--orange)"></i></div>
+          <h3 class="font-display font-bold text-base" style="color:var(--navy)">Fuel-Flex Injectors</h3>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">Novel injector designs combining CFD optimization and experimental validation for stable lean combustion across fuel blends.</p>
+      </div>
+      <div class="bg-white rounded-xl p-5 border border-border">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-box" style="background:#eff6ff"><i data-lucide="shield-check" class="w-5 h-5" style="color:#2563eb"></i></div>
+          <h3 class="font-display font-bold text-base" style="color:var(--navy)">Patented Process</h3>
+        </div>
+        <p class="text-gray-500 text-sm leading-relaxed">Our HTL-based fuel production method is patented with tested and certified fuel combinations ready for industrial deployment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ENERGY LAB ── -->
+<section class="py-16 md:py-20 px-6 bg-white">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-2">Energy Lab</p>
+      <div class="divider mx-auto" style="width:60px"></div>
+      <h2 class="section-title">Localized Power Production</h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- HTL side -->
+      <div class="bg-gray-50 rounded-2xl p-6 border border-border">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-2 h-6 rounded" style="background:var(--orange)"></span>
+          <h3 class="font-display font-bold text-lg" style="color:var(--navy)">Hydrothermal Liquefaction</h3>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+          Our HTL reactor converts agricultural waste (sugarcane stubble, algae) into bio-oils, aqueous phase extract, gases, and biochars — with catalysts yielding high-quality, high HHV bio-oil at high yield.
+        </p>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="bg-white rounded-lg p-3 border border-border text-center">
+            <p class="font-bold" style="color:var(--orange)">Bio-Oils</p>
+            <p class="text-gray-400 text-xs">High HHV & Yield</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-border text-center">
+            <p class="font-bold" style="color:var(--green)">H₂, CH₄</p>
+            <p class="text-gray-400 text-xs">Combustible gases</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-border text-center">
+            <p class="font-bold" style="color:#2563eb">Aqueous Extract</p>
+            <p class="text-gray-400 text-xs">Value-added chemicals</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-border text-center">
+            <p class="font-bold" style="color:var(--steel)">Biochars</p>
+            <p class="text-gray-400 text-xs">Fertilizers & catalyst</p>
+          </div>
+        </div>
+      </div>
+      <!-- Gas turbine power gen side -->
+      <div class="bg-gray-50 rounded-2xl p-6 border border-border">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-2 h-6 rounded" style="background:var(--red)"></span>
+          <h3 class="font-display font-bold text-lg" style="color:var(--navy)">Gas Turbine Power Generation</h3>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-4">
+          The bio-derived fuel feeds directly into our micro gas turbine test rig. The combustion system — compressor → combustion chamber → gas turbine → synchronous generator — produces 30–100 KW of AC power.
+        </p>
+        <!-- Mini flowchart -->
+        <div class="flex items-center flex-wrap gap-1 text-xs font-semibold" style="color:var(--navy)">
+          <span class="bg-blue-100 text-blue-700 rounded px-2 py-1">Compressor</span>
+          <span style="color:var(--orange)">→</span>
+          <span class="bg-red-100 rounded px-2 py-1" style="color:var(--red)">Combustion</span>
+          <span style="color:var(--orange)">→</span>
+          <span class="bg-orange-100 rounded px-2 py-1" style="color:var(--orange)">Gas Turbine</span>
+          <span style="color:var(--orange)">→</span>
+          <span class="bg-green-100 rounded px-2 py-1" style="color:var(--green)">AC Power</span>
+        </div>
+        <div class="mt-4 p-3 rounded-lg" style="background:linear-gradient(135deg,#0a1628,#1a2f50)">
+          <p class="text-orange-400 font-display font-bold text-xl">30 – 100 KW</p>
+          <p class="text-blue-300 text-xs mt-1">LAN-Based Engines & Localized Power Production</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PUBLICATIONS ── -->
+<section class="py-16 md:py-20 px-6" style="background:var(--surface)">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label mb-2">Publications</p>
+      <div class="divider mx-auto" style="width:60px"></div>
+      <h2 class="section-title">Selected Works</h2>
+    </div>
+    <div class="space-y-4">
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">Lean Burn Combustion in Gas Turbine Aero-Engines: Stability and Emissions at Elevated Pressures</h3>
+        <p class="text-gray-400 text-xs">Combustion and Flame, 2024</p>
+      </div>
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">Hydrothermal Liquefaction of Agricultural Residues for Biofuel Blending in Gas Turbine Combustors</h3>
+        <p class="text-gray-400 text-xs">Energy & Fuels, 2024</p>
+      </div>
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">PIV Measurements of Swirl-Stabilized Flames in a Fuel-Flexible Micro-Turbine Combustor</h3>
+        <p class="text-gray-400 text-xs">ASME Turbo Expo, 2023</p>
+      </div>
+      <div class="pub-card">
+        <h3 class="font-semibold text-sm mb-1 leading-snug" style="color:var(--navy)">High-Speed Flow Characterization in Turbine Passages Using Laser Schlieren Diagnostics</h3>
+        <p class="text-gray-400 text-xs">Journal of Propulsion and Power, 2023</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+
+<!-- ── FOOTER ── -->
+<footer style="border-top:1px solid var(--border); background:#fff;" class="py-8 px-6">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-gray-400">
+    <span class="font-display font-bold" style="color:var(--navy)">Propulsion & Energy Lab</span>
+    <span>contact@gasturbinelab.edu</span>
+    <span>© 2025 Research Lab</span>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,1788 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Shanmugadas K. P. | Aerospace Researcher</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&amp;family=Source+Sans+3:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #1e3a5f;
+      --accent-blue: #2563eb;
+      --light-blue: #e8f0fe;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --surface-light: #f8fafc;
+    }
+    
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: #ffffff;
+      color: var(--text-dark);
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .main-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .fade-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .fade-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    /* Staggered animations for cards */
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
+    
+    /* Custom scrollbar */
+    .main-wrapper::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .main-wrapper::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    
+    .main-wrapper::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    
+    .main-wrapper::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    
+    /* Card hover effects */
+    .research-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .research-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(30, 58, 95, 0.12);
+    }
+    
+    /* Button styles */
+    .btn-primary {
+      background: var(--primary-blue);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background: #152d4a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(30, 58, 95, 0.25);
+    }
+    
+    .btn-outline {
+      border: 2px solid var(--primary-blue);
+      color: var(--primary-blue);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary-blue);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    /* Section divider */
+    .section-divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+      border-radius: 2px;
+    }
+    
+    /* Nav active state */
+    .nav-link {
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-blue);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Profile image */
+    .profile-image {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 4px solid var(--primary-blue);
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    /* Publication item */
+    .publication-item {
+      border-left: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .publication-item:hover {
+      border-left-color: var(--accent-blue);
+      background: var(--light-blue);
+    }
+    
+    /* Gallery image */
+    .gallery-item {
+      overflow: hidden;
+    }
+    
+    .gallery-item img {
+      transition: transform 0.5s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+    
+    /* Form inputs */
+    .form-input {
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .form-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    /* Mobile menu */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div class="main-wrapper"><!-- Navigation -->
+   <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center h-16"><a href="#hero" class="font-display text-lg font-bold" style="color: var(--primary-blue);"> Dr. Shanmugadas K. P. </a> <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8"><a href="#about" class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900">About</a> <a href="#research" class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900">Research</a> <a href="#projects" class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900">Projects</a> <a href="#publications" class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900">Publications</a> <a href="#mentorship" class="nav-link text-sm font-medium text-gray-600 hover:text-gray-900">Mentorship</a> <a href="#contact" class="btn-primary text-white px-4 py-2 rounded-md text-sm font-medium">Contact</a>
+      </div><!-- Mobile Menu Button --> <button id="menuBtn" class="md:hidden p-2 text-gray-600 hover:text-gray-900">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed top-16 right-0 bottom-0 w-64 bg-white shadow-xl md:hidden">
+     <div class="flex flex-col p-6 space-y-4"><a href="#about" class="text-gray-600 hover:text-gray-900 font-medium py-2">About</a> <a href="#research" class="text-gray-600 hover:text-gray-900 font-medium py-2">Research</a> <a href="#projects" class="text-gray-600 hover:text-gray-900 font-medium py-2">Projects</a> <a href="#publications" class="text-gray-600 hover:text-gray-900 font-medium py-2">Publications</a> <a href="#mentorship" class="text-gray-600 hover:text-gray-900 font-medium py-2">Mentorship</a> <a href="#gallery" class="text-gray-600 hover:text-gray-900 font-medium py-2">Gallery</a> <a href="#contact" class="btn-primary text-white px-4 py-2 rounded-md text-center font-medium mt-4">Contact</a>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="hero" class="pt-24 pb-16 md:pt-32 md:pb-24" style="background: linear-gradient(180deg, var(--light-blue) 0%, #ffffff 100%);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16"><!-- Profile Image -->
+      <div class="fade-in-left profile-image w-48 h-48 md:w-64 md:h-64 rounded-full flex-shrink-0">
+       <div class="w-full h-full rounded-full overflow-hidden" style="background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);">
+
+  <!-- Profile Image -->
+  <img src="imagesprofile.jpg" 
+       alt="Profile Image"
+       class="w-full h-full object-cover rounded-full"
+       onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+  <!-- SVG Fallback (only shows if image fails) -->
+  <svg viewBox="0 0 200 200" 
+       class="w-full h-full rounded-full hidden">
+       
+    <defs>
+      <linearGradient id="profileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:0.1" />
+        <stop offset="100%" style="stop-color:#2563eb;stop-opacity:0.2" />
+      </linearGradient>
+    </defs>
+
+    <circle cx="100" cy="80" r="45" fill="#94a3b8" />
+    <ellipse cx="100" cy="180" rx="60" ry="50" fill="#94a3b8" />
+    <circle cx="100" cy="100" r="95" fill="url(#profileGrad)" stroke="#1e3a5f" stroke-width="3" />
+    <path d="M55 145 Q100 120 145 145 L145 200 L55 200 Z" fill="#1e3a5f" opacity="0.3" />
+
+  </svg>
+
+</div>
+      </div><!-- Hero Content -->
+      <div class="fade-in-right text-center md:text-left flex-1">
+       <p class="text-sm font-semibold tracking-wider uppercase mb-3" style="color: var(--accent-blue);">Welcome</p>
+       <h1 id="heroTitle" class="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style="color: var(--primary-blue);">Dr. Shanmugadas K. P.</h1>
+       <p id="heroTagline" class="text-lg md:text-xl font-light mb-6" style="color: var(--text-muted);">Assistant professor | Founder | Ex. AD UG IIT jammu | Alumni IIT M</p>
+       <p id="heroIntro" class="text-base md:text-lg leading-relaxed mb-8 max-w-2xl" style="color: var(--text-dark);">Dr. Shanmugadas K. P. is an aerospace engineer, researcher, and founder working on advanced aerospace systems, UAV technologies, and innovative engineering solutions.</p>
+       <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"><a href="#research" class="btn-primary text-white px-8 py-3 rounded-md font-medium text-center"> View Research </a> <a href="#contact" class="btn-outline px-8 py-3 rounded-md font-medium text-center"> Contact </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+<!-- About Section -->
+<section id="about" class="py-16 md:py-24 bg-white">
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Title -->
+    <div class="fade-in text-center mb-12">
+      <h2 id="aboutTitle" class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--primary-blue);">
+        About
+      </h2>
+      <div class="section-divider mx-auto"></div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- LEFT CONTENT -->
+      <div class="fade-in-left">
+
+        <div class="space-y-6">
+
+          <!-- Academic -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+              <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                <path stroke-width="2" d="M12 14l6.16-3.422A12.083 12.083 0 0119 17.5 11.952 11.952 0 0012 20.055 11.952 11.952 0 005 17.5a12.078 12.078 0 01.665-6.479L12 14z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-lg mb-2" style="color: var(--text-dark);">
+                Academic & Research Excellence
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Dr. Shanmugadas, Assistant Professor at IIT Jammu, leads the Propulsion and Energy Lab.
+                His expertise includes combustion, two-phase flow, and laser diagnostics for advanced propulsion systems.
+              </p>
+            </div>
+          </div>
+
+          <!-- Research -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+              <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16"/>
+                <path stroke-width="2" d="M3 21h18"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-lg mb-2" style="color: var(--text-dark);">
+                Advanced Propulsion Research
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Focused on developing multi-fuel gas turbine combustors (Hydrogen, Methane, SAF) and
+                liquid rocket engine technologies with strong emphasis on efficiency and low emissions.
+              </p>
+            </div>
+          </div>
+
+          <!-- Collaboration -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+              <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M17 20h5V4H2v16h5"/>
+                <path stroke-width="2" d="M9 20h6"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-lg mb-2" style="color: var(--text-dark);">
+                Global Collaborations
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Collaborates with ISRO, GE Aerospace, DRDO, IIT Madras (NCCRD), and Technical University of Munich,
+                driving impactful aerospace innovations and research.
+              </p>
+            </div>
+          </div>
+
+          <!-- Innovation -->
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+              <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3"/>
+                <path stroke-width="2" d="M9.663 17h4.673"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-lg mb-2" style="color: var(--text-dark);">
+                Innovation & Leadership
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Founder of Machfly Aerospace, working on UCAV and  engine technologies.
+                Ex.Associate Dean (Academic Affairs) at IIT Jammu and active contributor to aerospace innovation ecosystem.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Extra Info -->
+        <div class="mt-8 text-sm text-gray-600 space-y-2">
+          <p><strong>Research:</strong> Propulsion, Combustion, Clean Energy</p>
+          <p><strong>Education:</strong> B.Tech (Calicut), MS & PhD (IIT Madras)</p>
+          <p><strong>Awards:</strong> Boeing BUILD Winner, SERB SIRE Fellow, Best Paper Award</p>
+          <p><strong>Students Guided:</strong> 2 PhD, 3 M.Tech, 23+ B.Tech</p>
+        </div>
+
+      </div>
+
+      <!-- RIGHT VIDEO -->
+      <div class="fade-in-right">
+        <div class="w-[600px] h-[600px] overflow-hidden rounded-xl shadow-lg">
+          <video autoplay loop muted playsinline class="w-full h-full object-cover">
+            <source src="your-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+</section><!-- Research & Expertise Section -->
+   <section id="research" class="py-16 md:py-24" style="background: var(--surface-light);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="fade-in text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--primary-blue);">Research &amp; facilities</h2>
+      <div class="section-divider mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">Exploring the frontiers of aerospace engineering through research, innovation, and practical applications.</p>
+     </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+  <!-- Card 1 -->
+  <a href="uav.html" class="fade-in stagger-1 research-card relative rounded-xl overflow-hidden shadow-sm h-[260px] flex items-end">
+    <div class="absolute inset-0">
+      <img src="images/uav.jpg" class="w-full h-full object-cover">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+    <div class="relative p-5 text-white">
+      <h3 class="font-semibold text-lg mb-2">Gas Turbine Combustion</h3>
+      <p class="text-gray-200 text-sm">
+        next-generation combustion solutions.
+      </p>
+    </div>
+  </a>
+
+  <!-- Card 2 -->
+  <a href="aerodynamics.html" class="fade-in stagger-2 research-card relative rounded-xl overflow-hidden shadow-sm h-[260px] flex items-end">
+    <div class="absolute inset-0">
+      <img src="images/aero.jpg" class="w-full h-full object-cover">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+    <div class="relative p-5 text-white">
+      <h3 class="font-semibold text-lg mb-2">Liquid Rocket Propulsion</h3>
+      <p class="text-gray-200 text-sm">
+        Advancing the science of liquid bipropellant rocket engines
+      </p>
+    </div>
+  </a>
+
+  <!-- Card 3 -->
+  <a href="design.html" class="fade-in stagger-3 research-card relative rounded-xl overflow-hidden shadow-sm h-[260px] flex items-end">
+    <div class="absolute inset-0">
+      <img src="images/design.jpg" class="w-full h-full object-cover">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+    <div class="relative p-5 text-white">
+      <h3 class="font-semibold text-lg mb-2">Facilities</h3>
+      <p class="text-gray-200 text-sm">
+        Advanced infrastructure for propulsion systems, combustion testing, and high-speed aerodynamic research..
+      </p>
+    </div>
+  </a>
+
+  
+
+  <!-- Card 5 -->
+<a href="https://www.machflyaerospace.com/" target="_blank" rel="noopener noreferrer"
+   class="fade-in stagger-5 research-card relative rounded-xl overflow-hidden shadow-sm h-[260px] flex items-end">
+
+  <div class="absolute inset-0">
+    <img src="images/startup.jpg" class="w-full h-full object-cover">
+  </div>
+
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+
+  <div class="relative p-5 text-white">
+    <h3 class="font-semibold text-lg mb-2">Innovation & Startups</h3>
+    <p class="text-gray-200 text-sm">
+      Entrepreneurship, tech transfer, and aerospace startups.
+    </p>
+  </div>
+
+</a>
+
+</div>
+</section>
+   </section><!-- Projects Section -->
+
+<section id="projects" class="py-16 md:py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="fade-in text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--primary-blue);">
+        Projects & Work
+      </h2>
+      <div class="section-divider mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Advancing aerospace research through propulsion systems, combustion science, and high-speed flow experiments.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <!-- Project 1 -->
+      <div class="fade-in-left group">
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 h-full border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+
+          <div class="flex items-start gap-4 mb-4">
+            <span class="text-4xl font-display font-bold" style="color: var(--accent-blue); opacity: 0.3;">01</span>
+            <div>
+              <h3 class="font-semibold text-xl mb-2" style="color: var(--text-dark);">
+                Gas Turbine Combustor Development
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Development of multi-fuel combustors (Hydrogen, Methane, SAF) focusing on lean combustion,
+                low emissions, and high efficiency using advanced laser diagnostic techniques.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">Combustion</span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">Clean Energy</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="fade-in-right group">
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 h-full border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+
+          <div class="flex items-start gap-4 mb-4">
+            <span class="text-4xl font-display font-bold" style="color: var(--accent-blue); opacity: 0.3;">02</span>
+            <div>
+              <h3 class="font-semibold text-xl mb-2" style="color: var(--text-dark);">
+                Liquid Rocket Engine Research
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Development of METHALOX pintle injector systems, analyzing spray characteristics,
+                combustion stability, and injector performance for reusable rocket engines.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">Rocket Propulsion</span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">Injection Systems</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="fade-in-left group">
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 h-full border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+
+          <div class="flex items-start gap-4 mb-4">
+            <span class="text-4xl font-display font-bold" style="color: var(--accent-blue); opacity: 0.3;">03</span>
+            <div>
+              <h3 class="font-semibold text-xl mb-2" style="color: var(--text-dark);">
+                Supersonic Flow & Atomization (ISRO)
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Investigation of jet in supersonic crossflow (M=3), shock structures, and droplet breakup
+                using Schlieren imaging, TR-PIV, and laser diagnostics techniques.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">Supersonic Flow</span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">ISRO</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="fade-in-right group">
+        <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 h-full border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+
+          <div class="flex items-start gap-4 mb-4">
+            <span class="text-4xl font-display font-bold" style="color: var(--accent-blue); opacity: 0.3;">04</span>
+            <div>
+              <h3 class="font-semibold text-xl mb-2" style="color: var(--text-dark);">
+                UAV & Aero Engine Innovation (Machfly aerospace )
+              </h3>
+              <p class="text-gray-600 leading-relaxed">
+                Development of UCAV propulsion systems, UAV platforms, and integrated avionics
+                with focus on next-generation aerospace applications.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">UAV</span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full" style="background: var(--light-blue); color: var(--primary-blue);">Aero Engines</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+   <section id="publications" class="py-16 md:py-24" style="background: var(--surface-light);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="fade-in text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--primary-blue);">Publications &amp; Research</h2>
+      <div class="section-divider mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">Peer-reviewed publications, conference papers,  Book chapters and Patents.</p>
+     </div>
+     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"><!-- Publication Categories -->
+      <div class="flex border-b border-gray-100"><button class="pub-tab flex-1 py-4 text-sm font-medium transition-colors" style="background: var(--light-blue); color: var(--primary-blue);" data-tab="journals">Journal Papers</button> <button class="pub-tab flex-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors" data-tab="conferences">Conferences</button> <button class="pub-tab flex-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors" data-tab="reports"> Book chapters and Patents</button>
+      </div><!-- Publications List -->
+      <div id="pubContent" class="divide-y divide-gray-100"><!-- Journal Papers -->
+       <div class="pub-panel" id="journals-panel">
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">A canonical geometry to study wall filming and atomization in pre-filming coaxial swirl injectors</h4>
+           <p class="text-gray-500 text-sm mb-2"> K. P. Shanmugadas, S. R. Chakravarthy — Proceedings of the Combustion Institute, 2017
+</p>
+           <p class="text-gray-600 text-sm">Study on wall filming and atomization characteristics in coaxial swirl injectors.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Characterization of wall filming and atomization inside a gas turbine fuel injector
+</h4>
+           <p class="text-gray-500 text-sm mb-2"> K. P. Shanmugadas, S. R. Chakravarthy, R. N. Chiranthan, Jayanth Sekar, Sundar Krishnaswami — Experiments in Fluids, 2018
+</p>
+           <p class="text-gray-600 text-sm">Experimental investigation of fuel atomization and wall film behavior in gas turbine injectors.
+</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Fuel placement and atomization inside a gas-turbine fuel injector at realistic operating conditions</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, E. S. Manuprasad, R. N. Chiranthan, S. R. Chakravarthy — Proceedings of the Combustion Institute, 2021
+</p>
+           <p class="text-gray-600 text-sm">Analysis of fuel placement and atomization under realistic gas turbine operating conditions.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">A canonical geometry to study wall filming and atomization in pre-filming coaxial swirl injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, S. R. Chakravarthy
+</p>
+           <p class="text-gray-600 text-sm">36th International Symposium on Combustion, Seoul, South Korea, 2016.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Role of precessing vortex core on wall filming and ligament breakup inside a pre-filming airblast atomizer</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, S. R. Chakravarthy
+</p>
+           <p class="text-gray-600 text-sm">18th Annual Conference on Liquid Atomization & Spray Systems Asia, ILASS Asia, Chennai, India, 2016.</p>
+          </div>
+         </div>
+        </div>
+
+       </div><!-- Conference Papers -->
+       <div class="pub-panel hidden" id="conferences-panel">
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Wall filming and atomization inside a swirl cup”, 13th Triennial International Conference on Liquid Atomization and Spray Systems, ICLASS -2015, Taiwan, 2015.</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, S. R. Chakravarthy</p>
+           
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Characterization of an aero engine fuel injector spray at realistic engine conditions</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, S. R. Chakravarthy</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 1st National Aerospace Propulsion Conference, Kanpur, India, 2017.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Wall Filming and Atomization Inside a Simplified Pre-filming Coaxial Swirl Injector: Role of Unsteady Aerodynamics</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, S. R. Chakravarthy</p>
+           <p class="text-gray-600 text-sm">AIAA Aerospace Sciences Meeting, AIAA SciTech Forum, Kissimmiee, Florida, USA, 2018..</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Laser diagnostics techniques for the internal spray characterization of fuel injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, R. Manikandan and S. R. Chakravarthy</p>
+           <p class="text-gray-600 text-sm">National conference on Future directions in Propulsion, LPSC, Thiruvananthapuram, India, 2018.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Spray characteristics of a dual orifice swirl cup at elevated pressures and temperatures</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, S. R. Chakravarthy, R. N. Chiranthan, Jayanth Sekar and Sundar Krishnaswami</p>
+           <p class="text-gray-600 text-sm">14th Triennial International Conference on Liquid Atomization and Spray Systems, ICLASS 2018, Chicago, USA, 2018.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Characterization of atomization inside a dry low emission (DLE) premixer</h4>
+           <p class="text-gray-500 text-sm mb-2">Deepti Bhandari, Rohit Grover, K. P. Shanmugadas, S. R. Chakravarthy, Ranjeet Mishra, Pradeep Naik, Jayanth Sekar and Sundar Krishnaswami</p>
+           <p class="text-gray-600 text-sm">14th Triennial International Conference on Liquid Atomization and Spray Systems, ICLASS 2018, Chicago, USA, 2018.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Experimental investigation of recirculation zone characteristics of a prefilming airblast injector</h4>
+           <p class="text-gray-500 text-sm mb-2">N. Darwish, K. P. Shanmugadas and S. R. Chakravarthy</p>
+           <p class="text-gray-600 text-sm">IOP Conference Series: Materials Science and Engineering. 1172- 012046, 2021.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Effect of ambient pressure on the internal atomization processes of a gas-turbine fuel injector</h4>
+           <p class="text-gray-500 text-sm mb-2">K. P. Shanmugadas, S. R. Chakravarthy</p>
+           <p class="text-gray-600 text-sm">5th Triennial International Conference on Liquid Atomization and Spray Systems, ICLASS 2021, Edinburgh, Scotland.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Characterization of primary atomization processes of like-on-unlike impinging injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">Bikash Mahato, Vivek Sahu, Vikram R. Ganesh P., and K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 1st International Conference in Fluid Thermal and Energy Systems, Calicut, India, 2022.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Role of swirl velocity field and shear layers on the atomization processes of gas turbine swirl injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">Vivek Sahu, Aman Bakshi and K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">22nd Annual Conference on Liquid Atomization & Spray Systems Asia, ILASS Asia, 2022, Indore, India.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Characterization of primary atomization of like on unlike impinging injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">Bikash Mahato and K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">22nd Annual Conference on Liquid Atomization & Spray Systems Asia, ILASS Asia, 2022, Indore, India.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Characterization of the spray flow field at the exit of a pintle injector </h4>
+           <p class="text-gray-500 text-sm mb-2">Sanjay Kumar Gupta , Aman Bakshi , Rachit, Bundiwal , K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 9th International and 49th National Conference on Fluid Mechanics and Fluid Power (FMFP), December 14-16, 2022, IIT Roorkee.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Development of Advanced Fuel Injector Concepts for Compact Lean-Burn Gas-Turbine Combustors </h4>
+           <p class="text-gray-500 text-sm mb-2">Ayush Divyansh, Preetam Jamod and K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 9th International and 49th National Conference on Fluid Mechanics and Fluid Power (FMFP), December 14-16, 2022, IIT Roorkee.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">nvestigation of the liquid sheet breakup dynamics in like-on-unlike impinging injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">Aditi Sharma , Bikash Mahato , Ganesh P. and K. P Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 9th International and 49th National Conference on Fluid Mechanics and Fluid Power (FMFP), December 14-16, 2022, IIT Roorkee.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Effect of Secondary Swirl Strength on the External Aerodynamics of a Gas Turbine Fuel Injector</h4>
+           <p class="text-gray-500 text-sm mb-2">Vivek Sahu, Devin Chugh, Deepanshu Mittal, Shanmugadas K P</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 9th International and 49th National Conference on Fluid Mechanics and Fluid Power (FMFP), December 14-16, 2022, IIT Roorkee.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Internal and External Aerodynamics of a Lean-Burn Gas Turbine Fuel Injector</h4>
+           <p class="text-gray-500 text-sm mb-2">Preetam Jamod, Ayush Divyansh, and K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 9th International and 49th National Conference on Fluid Mechanics and Fluid Power (FMFP), December 14-16, 2022, IIT Roorkee.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Subcooled flow boiling characteristics in an eccentric annulus at low pressure conditions</h4>
+           <p class="text-gray-500 text-sm mb-2">Ayush Kumar Rao, Shanmugadas K.P., Pothukuchi Hairsh</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 27th National and 5th International ISHMT-ASTFE Heat and Mass Transfer Conference, December 14-17, 2023, IIT Patna, Patna-801106, Bihar, India.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Design And Numerical Analysis Of A Lean Burn Combustor Liner Inlet For Micro-Gas Turbine Engine Applications</h4>
+           <p class="text-gray-500 text-sm mb-2">Vatsal Tyagi, Ayush Divyansh, Preetam Jamod, K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the ASME 2023, Gas Turbine India 2023, GTIndia2023-118472.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Numerical Simulation and Aerodynamics of a Fuel Flexible Injector for Micro-Gas Turbine Engines</h4>
+           <p class="text-gray-500 text-sm mb-2">Shivam Uniyal, Preetam Jamod, Saket Singh, Ayush Divyansh Shanmugadas K.P.</p>
+           <p class="text-gray-600 text-sm">Proceedings of the ASME 2023, Gas Turbine India 2023, GTIndia2023-118428.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Numerical Investigation On The Optimization Of Angled Effusion Holes Of Liner Assembly Of Micro Gas Turbine Engine Combustor</h4>
+           <p class="text-gray-500 text-sm mb-2">Nivedita Shahi, Ayush Divyansh, Vatsal Tyagi, Shanmugadas K.P.</p>
+           <p class="text-gray-600 text-sm">Proceedings of the ASME 2023, Gas Turbine India 2023, GTIndia2023-118466.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Internal and External Flow Characteristics on Variation of Swirl Strength for a Fuel Flexible Injector for Micro Gas Turbine Engines</h4>
+           <p class="text-gray-500 text-sm mb-2">Abhishek Verma, Preetam Jamod, Shanmugadas K.P., Shivam Uniyal, Ayush Divyansh</p>
+           <p class="text-gray-600 text-sm">Proceedings of the ASME 2023, Gas Turbine India 2023, GTindia2023-118470.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Numerical investigation of Spray characteristics of lean-burn gas turbine injector.</h4>
+           <p class="text-gray-500 text-sm mb-2">Nandani Gupta , Shrey Shrivastava , Preetam Jamod , Shanmugadas K.P.</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 10th International and 50th National Conference on Fluid Mechanics and Fluid Power (FMFP), FMFP2023–520, 2023.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Characterization of Injector aero dynamics in lean burn micro gas turbine engine combustors</h4>
+           <p class="text-gray-500 text-sm mb-2">Vikash Garg, Preetam Jamod, Vivek Sahu, Prashant Singh, K.P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 10th International and 50th National Conference on Fluid Mechanics and Fluid Power (FMFP), 2023. FMFP2023-193.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Numerical Investigation of Spray Characteristics for Main Atomizer of Lean Burn Gas Turbine Fuel Injector</h4>
+           <p class="text-gray-500 text-sm mb-2">Shrey Srivastava, Nandani Gupta , Ayush Divyansh K.P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 10th International and 50th National Conference on Fluid Mechanics and Fluid Power (FMFP), 2023. FMFP2023-524.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Experimental Investigation of aerodynamics in a fuel flex injector using Particle Velocimetry Imaging</h4>
+           <p class="text-gray-500 text-sm mb-2">Prashant Singh, Amit Rajput, Abhishek Verma, Preetam Jamod, Shanmugadas K P</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 10th International and 50th National Conference on Fluid Mechanics and Fluid Power (FMFP), 2023. FMFP2023-194.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Numerical Study on Flow Through a Simple Diffuser</h4>
+           <p class="text-gray-500 text-sm mb-2">Sayan Patra, Shanmugadas K P</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 10th International and 50th National Conference on Fluid Mechanics and Fluid Power (FMFP), 2023. FMFP2023-195.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Influence of spacer grids on the thermal hydraulics of a hexagonal sub-assembly</h4>
+           <p class="text-gray-500 text-sm mb-2">Ayush Kumar Rao, Shanmugadas K.P., Pothukuchi Hairsh</p>
+           <p class="text-gray-600 text-sm">Proceedings of the 10th International and 50th National Conference on Fluid Mechanics and Fluid Power (FMFP), 2023.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Numerical Investigation on the Secondary Atomization Characteristics of a Bi-Swirl Pintle Injector</h4>
+           <p class="text-gray-500 text-sm mb-2">Ayanava Roy, Rachit Bundiwal, Shib Narayan Roy, KP Shanmugadas</p>
+           <p class="text-gray-600 text-sm">2023 Regional Student Conferences, American Institute of Aeronautics and Astronautics, AIAA 2023-77035, doi.org/10.2514/6.2023-77035.</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Technical Reports -->
+       <div class="pub-panel hidden" id="reports-panel">
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Chapter 58: Characterization of Primary Atomization Processes of Like-on-Unlike Impinging Injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">Bikash Mahato, Vivek Sahu, R. Vikram, P. Ganesh, and K. P. Shanmugadas.</p>
+           <p class="text-gray-600 text-sm">Mechanical Engineering, Sudev Das et al. (Eds): Proceedings of the 1st International Conference in Fluid, Thermal and Energy Systems, Springer Nature. DOI: 10.1007/978-981-99-5990-7.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Investigation of the liquid sheet breakup dynamics in like-on-unlike impinging injectors</h4>
+           <p class="text-gray-500 text-sm mb-2">Aditi Sharma, Bikash Mahato, Ganesh P., and K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">Chapter 3: Lect.Notes Mechanical Engineering, Krishna Mohan Singh et al. (Eds): Fluid Mechanics and Fluid Power, Volume 5.</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Development of Advanced Fuel Injector Concepts for Compact Lean-Burn Gas-Turbine Combustors</h4>
+           <p class="text-gray-500 text-sm mb-2">Ayush Divyansh, Preetam Jamod, and K. P. Shanmugadas</p>
+           <p class="text-gray-600 text-sm">K. M. Singh et al. (eds.), Fluid Mechanics and Fluid Power, Volume 4, Lecture Notes in Mechanical Engineering, https://doi.org/10.1007/978-981-99-7177-0_14.
+</p>
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Bi-swirl pintle injector, Filing number: 2023-11056223.</h4>
+           
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Method And Apparatus For Enhanced Atomization In A Lean Burn Gas Turbine EngineMain Injector Mixer: Filing number: 2023-11062733.</h4>
+           
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Method and Apparatus For Enhanced Atomization In A Lean Burn Gas Turbine Engine: Filing number: 202311062674.</h4>
+           
+          </div>
+         </div>
+        </div>
+        <div class="publication-item p-6 cursor-pointer">
+         <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+           <svg class="w-5 h-5" style="color: var(--accent-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+           </svg>
+          </div>
+          <div class="flex-1">
+           <h4 class="font-medium text-lg mb-1" style="color: var(--text-dark);">Slit-Type Pintle Injector With Impinging Jets For Throttelable Liquid Rocket Engine Applications. Filing number-202311063973.</h4>
+           
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+ </section><!-- Mentorship Section -->
+<section id="mentorship" class="py-16 md:py-24 bg-white">
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- LEFT CONTENT -->
+      <div class="fade-in-left">
+
+        <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--primary-blue);">
+          Mentorship, Internships & Research Opportunities
+        </h2>
+
+        <div class="section-divider mb-6"></div>
+
+        <p class="text-gray-600 leading-relaxed mb-6">
+          We offer advanced research opportunities in aerospace propulsion, combustion, and high-speed flow physics.
+          Students gain hands-on experience through real-world experiments, industry collaboration, and cutting-edge research.
+        </p>
+
+        <!-- Highlights -->
+        <div class="space-y-4">
+
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--light-blue);">✔</div>
+            <span class="text-gray-700">PhD research in combustors & rocket propulsion systems</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--light-blue);">✔</div>
+            <span class="text-gray-700">ISRO-supported research on supersonic crossflow (JRF)</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--light-blue);">✔</div>
+            <span class="text-gray-700">Hands-on experiments using laser diagnostics & flow visualization</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center" style="background: var(--light-blue);">✔</div>
+            <span class="text-gray-700">B.Tech / M.Tech thesis & internship opportunities</span>
+          </div>
+
+        </div>
+
+        <!-- Detailed Sections -->
+        <div class="mt-8 space-y-6 text-gray-600 text-sm leading-relaxed">
+
+          <!-- PhD -->
+          <div>
+            <h3 class="font-semibold text-gray-800 mb-2">🎓 PhD Positions</h3>
+            <p>
+              Research on low-emission gas turbine combustors and reusable liquid rocket engines.
+              Work includes spray, combustion, injector design, and performance analysis using advanced optical diagnostics.
+            </p>
+          </div>
+
+          <!-- JRF -->
+          <div>
+            <h3 class="font-semibold text-gray-800 mb-2">🔬 Junior Research Fellow (ISRO Collaboration)</h3>
+            <p>
+              Study supersonic crossflow (M=3), jet interaction, atomization, and shock structures using
+              Schlieren imaging, TR-PIV, and laser diagnostics.
+            </p>
+          </div>
+
+          <!-- Projects -->
+          <div>
+            <h3 class="font-semibold text-gray-800 mb-2">🎓 B.Tech / M.Tech Projects</h3>
+            <p>
+              Open to IIT Jammu students for thesis work in propulsion, combustion, UAV systems, and experimental fluid mechanics.
+            </p>
+          </div>
+
+          <!-- Internship -->
+          <div>
+            <h3 class="font-semibold text-gray-800 mb-2">🚀 Internships</h3>
+            <p>
+              Apply via Machfly Aerospace or contact the PI for hands-on experience in UAV design,
+              aerospace systems, and real-world engineering projects.
+            </p>
+          </div>
+
+        </div>
+
+        
+
+        <!-- CTA -->
+        <a href="#contact"
+           class="inline-flex items-center gap-2 mt-8 btn-primary text-white px-6 py-3 rounded-md font-medium hover:scale-105 transition">
+          Apply Now 🚀
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+
+      </div>
+
+      <!-- RIGHT VIDEO -->
+      <div class="fade-in-right">
+
+        <div class="relative rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-500">
+
+          <video autoplay muted loop playsinline class="w-full h-[600px] object-cover">
+            <source src="videos/mentorship.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          <div class="absolute inset-0 bg-black/20"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section id="people" class="py-16 md:py-24" style="background: var(--surface-light);">
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Heading -->
+    <div class="fade-in text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--primary-blue);">
+        People
+      </h2>
+      <div class="section-divider mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Team members, researchers, and collaborators.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+
+      <!-- Person 1 -->
+      <div class="fade-in stagger-1 relative rounded-xl overflow-hidden aspect-square shadow-sm group">
+        <img src="images/person1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+        <div class="absolute bottom-3 left-3 text-white">
+          <h3 class="text-sm md:text-base font-semibold">Preetam jamod</h3>
+        </div>
+      </div>
+
+      <!-- Person 2 -->
+      <div class="fade-in stagger-2 relative rounded-xl overflow-hidden aspect-square shadow-sm group">
+        <img src="images/person2.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+        <div class="absolute bottom-3 left-3 text-white">
+          <h3 class="text-sm md:text-base font-semibold">Ayush divyansh</h3>
+        </div>
+      </div>
+
+      <!-- Person 3 -->
+      <div class="fade-in stagger-3 relative rounded-xl overflow-hidden aspect-square shadow-sm group">
+        <img src="images/person3.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+        <div class="absolute bottom-3 left-3 text-white">
+          <h3 class="text-sm md:text-base font-semibold">lal mahmmad khan</h3>
+        </div>
+      </div>
+
+      <!-- Person 4 -->
+      <div class="fade-in stagger-4 relative rounded-xl overflow-hidden aspect-square shadow-sm group">
+        <img src="images/person2.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+        <div class="absolute bottom-3 left-3 text-white">
+          <h3 class="text-sm md:text-base font-semibold">Vivek shau</h3>
+        </div>
+      </div>
+
+      <!-- Person 5 -->
+      <div class="fade-in stagger-5 relative rounded-xl overflow-hidden aspect-square shadow-sm group">
+        <img src="images/person2.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+        <div class="absolute bottom-3 left-3 text-white">
+          <h3 class="text-sm md:text-base font-semibold">Team Member</h3>
+        </div>
+      </div>
+
+      <!-- Person 6-->
+      <div class="fade-in stagger-5 relative rounded-xl overflow-hidden aspect-square shadow-sm group">
+        <img src="images/person2.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+
+        <div class="absolute bottom-3 left-3 text-white">
+          <h3 class="text-sm md:text-base font-semibold">Team Member</h3>
+        </div>
+      </div>
+
+      <!-- Person 7 -->
+     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>  
+      <a href="interns.html"
+     class="research-card relative rounded-xl overflow-hidden shadow-sm 
+            h-[260px] flex items-end">
+
+    <div class="absolute inset-0">
+      <img src="images/group.png" class="w-full h-full object-cover">
+    </div>
+
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+
+    <div class="relative p-5 text-white">
+      <h3 class="font-semibold text-lg">Interns</h3>
+      <p class="text-gray-200 text-sm">
+        Meet our talented interns and contributors.
+      </p>
+    </div>
+
+  </a>
+
+    </div>
+
+  </div>
+
+</section>
+   </section><!-- Contact Section -->
+   <section id="contact" class="py-16 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="fade-in text-center mb-12">
+      <h2 class="font-display text-3xl md:text-4xl font-bold mb-4" style="color: var(--primary-blue);">Get In Touch</h2>
+      <div class="section-divider mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-2xl mx-auto">Interested in collaboration, research opportunities, or have questions? Feel free to reach out.</p>
+     </div>
+     <div class="grid md:grid-cols-2 gap-12"><!-- Contact Info -->
+      <div class="fade-in-left">
+       <div class="space-y-6">
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+          <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1" style="color: var(--text-dark);">Email</h3>
+          <p id="contactEmail" class="text-gray-600">shanmugadas.kp@iitjammu.ac.in</p>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+          <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="currentColor" viewbox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg mb-1" style="color: var(--text-dark);">LinkedIn</h3><a href="https://www.linkedin.com/in/shanmugadas-k-p-bb52662a/" target="_blank" rel="noopener noreferrer" class="hover:underline" style="color: var(--accent-blue);">Connect on LinkedIn</a>
+         </div>
+        </div>
+        <div class="flex items-start gap-4">
+
+          <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+            
+            <!-- Phone Icon -->
+            <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5a2 2 0 012-2h2.28a2 2 0 011.94 1.515l.516 2.06a2 2 0 01-.45 1.86l-1.27 1.27a16 16 0 006.586 6.586l1.27-1.27a2 2 0 011.86-.45l2.06.516A2 2 0 0119 18.72V21a2 2 0 01-2 2h-1C8.82 23 1 15.18 1 6V5z"/>
+            </svg>
+
+          </div>
+
+          <div>
+
+            <h3 class="font-semibold text-lg mb-1" style="color: var(--text-dark);">
+              Mobile
+            </h3>
+            <p class="text-gray-600">+91-7051226352</p>
+            <p class="text-gray-600">+91-1912741125</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+         <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background: var(--light-blue);">
+          <svg class="w-6 h-6" style="color: var(--primary-blue);" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+         </div>
+
+         
+        <div>
+
+          <h3 class="font-semibold text-lg mb-1" style="color: var(--text-dark);">
+            Location
+          </h3>
+          <p class="text-gray-600">
+            Indian Institute of Technology Jammu <br>
+            Jagti, NH-44 <br>
+            Jammu, Jammu & Kashmir 181221 <br>
+            India
+          </p>
+
+            </div>
+        </div>
+       </div><!-- Machfly Aerospace Card -->
+       <a href="https://www.machflyaerospace.com/" target="_blank" rel="noopener noreferrer"
+   class="block mt-8 p-6 rounded-xl border border-gray-200 hover:shadow-md transition"
+   style="background: var(--surface-light);">
+
+  <div class="flex items-center gap-3 mb-4">
+
+    <!-- LOGO -->
+    <div class="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center bg-white">
+      <img src="images/machfly-logo.png" alt="Machfly Aerospace" class="w-full h-full object-contain">
+    </div>
+
+    <!-- NAME -->
+    <span class="font-semibold text-lg" style="color: var(--primary-blue);">
+      Machfly Aerospace
+    </span>
+
+  </div>
+
+  <!-- DESCRIPTION -->
+  <p class="text-gray-600 text-sm">
+    Building the future of aerospace through innovation, research, and education.
+  </p>
+
+</a>
+      </div><!-- Contact Form -->
+      <div class="fade-in-right">
+       <form id="contactForm" class="space-y-5">
+        <div><label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label> <input type="text" id="name" name="name" required class="form-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none" placeholder="Your name">
+        </div>
+        <div><label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label> <input type="email" id="email" name="email" required class="form-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none" placeholder="your.email@example.com">
+        </div>
+        <div><label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label> <select id="subject" name="subject" required class="form-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none bg-white"> <option value="">Select a topic</option> <option value="research">Research Collaboration</option> <option value="internship">Internship Inquiry</option> <option value="consulting">Consulting</option> <option value="other">Other</option> </select>
+        </div>
+        <div><label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label> <textarea id="message" name="message" rows="4" required class="form-input w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none resize-none" placeholder="Your message..."></textarea>
+        </div><button type="submit" class="w-full btn-primary text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2"> Send Message 
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+         </svg></button>
+        <p id="formMessage" class="text-center text-sm hidden"></p>
+       </form>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+<footer class="py-8 border-t border-gray-100" style="background: var(--surface-light);">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      
+      <!-- Left: Name & Title -->
+      <div class="flex items-center gap-2">
+        <span class="font-display font-bold" style="color: var(--primary-blue);">
+          Dr. Shanmugadas K. P.
+        </span>
+        <span class="text-gray-400">|</span>
+        <span class="text-gray-500 text-sm">
+          Aerospace Researcher & Entrepreneur
+        </span>
+      </div>
+
+      <!-- Center: Social Icons -->
+      <div class="flex items-center gap-4">
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/shanmugadas-k-p-bb52662a/" target="_blank" rel="noopener noreferrer"
+           class="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-gray-100"
+           style="color: var(--text-muted);">
+
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 
+            0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 
+            1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 
+            5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 
+            0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 
+            2.064 2.063 0 1.139-.925 2.065-2.064 
+            2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 
+            0H1.771C.792 0 0 .774 0 1.729v20.542C0 
+            23.227.792 24 1.771 24h20.451C23.2 24 24 
+            23.227 24 22.271V1.729C24 .774 23.2 0 
+            22.222 0h.003z"/>
+          </svg>
+        </a>
+
+        <!-- Google Scholar -->
+        <a href="https://scholar.google.com/citations?user=YOUR_ID_HERE" target="_blank" rel="noopener noreferrer"
+           class="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-gray-100"
+           style="color: var(--text-muted);">
+
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 
+            13L3.74 10 12 5.5 20.26 10 12 16zm0 
+            2c-4.42 0-8 1.79-8 4h16c0-2.21-3.58-4-8-4z"/>
+          </svg>
+
+        </a>
+
+      </div>
+
+      <!-- Right: Copyright -->
+      <p class="text-gray-400 text-sm">
+        © 2024 All rights reserved
+      </p>
+
+    </div>
+
+  </div>
+</footer>
+</div>
+
+<script>
+    // Default configuration
+    const defaultConfig = {
+      hero_title: "Dr. Shanmugadas K. P.",
+      hero_tagline: "Aerospace Engineer | Founder | Researcher | Innovator",
+      hero_intro: "Dr. Shanmugadas K. P. is an aerospace engineer, researcher, and founder working on advanced aerospace systems, UAV technologies, and innovative engineering solutions.",
+      about_title: "About",
+      contact_email: "shanmugadas.kp@iitjammu.ac.in",
+      primary_color: "#1e3a5f",
+      secondary_color: "#2563eb",
+      background_color: "#ffffff",
+      surface_color: "#f8fafc",
+      text_color: "#1f2937"
+    };
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          // Update hero section
+          const heroTitle = document.getElementById('heroTitle');
+          if (heroTitle) heroTitle.textContent = config.hero_title || defaultConfig.hero_title;
+          
+          const heroTagline = document.getElementById('heroTagline');
+          if (heroTagline) heroTagline.textContent = config.hero_tagline || defaultConfig.hero_tagline;
+          
+          const heroIntro = document.getElementById('heroIntro');
+          if (heroIntro) heroIntro.textContent = config.hero_intro || defaultConfig.hero_intro;
+          
+          // Update about section
+          const aboutTitle = document.getElementById('aboutTitle');
+          if (aboutTitle) aboutTitle.textContent = config.about_title || defaultConfig.about_title;
+          
+          // Update contact email
+          const contactEmail = document.getElementById('contactEmail');
+          if (contactEmail) contactEmail.textContent = config.contact_email || defaultConfig.contact_email;
+          
+          // Apply colors
+          const primaryColor = config.primary_color || defaultConfig.primary_color;
+          const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+          const backgroundColor = config.background_color || defaultConfig.background_color;
+          const surfaceColor = config.surface_color || defaultConfig.surface_color;
+          const textColor = config.text_color || defaultConfig.text_color;
+          
+          document.documentElement.style.setProperty('--primary-blue', primaryColor);
+          document.documentElement.style.setProperty('--accent-blue', secondaryColor);
+          document.body.style.backgroundColor = backgroundColor;
+          document.documentElement.style.setProperty('--surface-light', surfaceColor);
+          document.documentElement.style.setProperty('--text-dark', textColor);
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_color || defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["hero_title", config.hero_title || defaultConfig.hero_title],
+          ["hero_tagline", config.hero_tagline || defaultConfig.hero_tagline],
+          ["hero_intro", config.hero_intro || defaultConfig.hero_intro],
+          ["about_title", config.about_title || defaultConfig.about_title],
+          ["contact_email", config.contact_email || defaultConfig.contact_email]
+        ])
+      });
+    }
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    
+    // Close mobile menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      root: document.querySelector('.main-wrapper'),
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Publications tabs
+    const pubTabs = document.querySelectorAll('.pub-tab');
+    const pubPanels = document.querySelectorAll('.pub-panel');
+
+    pubTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.dataset.tab;
+        
+        // Update tab styles
+        pubTabs.forEach(t => {
+          t.style.background = 'transparent';
+          t.style.color = '#6b7280';
+        });
+        tab.style.background = 'var(--light-blue)';
+        tab.style.color = 'var(--primary-blue)';
+        
+        // Show/hide panels
+        pubPanels.forEach(panel => {
+          if (panel.id === `${targetTab}-panel`) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+      });
+    });
+    
+    
+//contact form handling 
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const subject = document.getElementById("subject").value;
+      const message = document.getElementById("message").value;
+
+      emailjs.send("service_53zmy2e", "template_49865zr", {
+        name: name,
+        email: email,
+        subject: subject,
+        message: message
+      })
+      .then(() => {
+        formMessage.textContent = "✅ Message sent successfully!";
+        formMessage.className = "text-green-600 text-center text-sm";
+        formMessage.classList.remove("hidden");
+
+        contactForm.reset();
+      })
+      .catch(() => {
+        formMessage.textContent = "❌ Failed to send message!";
+        formMessage.className = "text-red-600 text-center text-sm";
+        formMessage.classList.remove("hidden");
+      });
+    });
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          const mainWrapper = document.querySelector('.main-wrapper');
+          const targetPosition = targetElement.offsetTop - 80;
+          
+          mainWrapper.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+  (function(){
+    emailjs.init("xXfgsCJb7eZkUZH0F"); // 🔥 यहाँ अपना public key डालो
+  })();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e5bf53c97220ed9',t:'MTc3NTA5MjI3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html> 
